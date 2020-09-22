@@ -161,40 +161,40 @@ public class PostsApiControllerTest {
         assertThat(posts.getModifiedDate()).isAfter(now);
     }
 
-    @Test
-    public void Posts_삭제된다() throws Exception {
-        //given
-        Posts savedPosts = postsRepository.save(Posts.builder()
-                .title("title")
-                .content("content")
-                .author("author")
-                .build());
-
-        Long id = savedPosts.getId();
-        System.out.println(id);
-        PostsDeleteRequestDto requestDto
-                = PostsDeleteRequestDto.builder()
-                .id(id)
-                .build();
-
-        String url = "http://localhost:" + port + "/api/v1/posts/" + id;
-        HttpEntity<PostsDeleteRequestDto> requestEntity
-                = new HttpEntity<>(requestDto);
-
-        //when
-        ResponseEntity<Long> responseEntity
-                = restTemplate.exchange(url, HttpMethod.DELETE,
-                requestEntity, Long.class);
-//        mvc.perform(delete(url)
-//                .contentType(MediaType.APPLICATION_JSON_UTF8)
-//                .content(new ObjectMapper().writeValueAsString(requestDto)))
-//                .andExpect(status().isOk());
-        //than
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.FOUND);
-//        assertThat(responseEntity.getBody()).isGreaterThan(0L);
+//    @Test
+//    public void Posts_삭제된다() throws Exception {
+//        //given
+//        Posts savedPosts = postsRepository.save(Posts.builder()
+//                .title("title")
+//                .content("content")
+//                .author("author")
+//                .build());
 //
-//        System.out.println(">>>>>>>>"+responseEntity.getBody().longValue());
-    }
+//        Long id = savedPosts.getId();
+//        System.out.println(id);
+//        PostsDeleteRequestDto requestDto
+//                = PostsDeleteRequestDto.builder()
+//                .id(id)
+//                .build();
+//
+//        String url = "http://localhost:" + port + "/api/v1/posts/" + id;
+//        HttpEntity<PostsDeleteRequestDto> requestEntity
+//                = new HttpEntity<>(requestDto);
+//
+//        //when
+//        ResponseEntity<Long> responseEntity
+//                = restTemplate.exchange(url, HttpMethod.DELETE,
+//                requestEntity, Long.class);
+////        mvc.perform(delete(url)
+////                .contentType(MediaType.APPLICATION_JSON_UTF8)
+////                .content(new ObjectMapper().writeValueAsString(requestDto)))
+////                .andExpect(status().isOk());
+//        //than
+//        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.FOUND);
+////        assertThat(responseEntity.getBody()).isGreaterThan(0L);
+////
+////        System.out.println(">>>>>>>>"+responseEntity.getBody().longValue());
+//    }
 
 
 }
