@@ -54,7 +54,7 @@ public class PostsApiControllerTest {
     private MockMvc mvc;
 
     @Before
-    public void setup(){
+    public void setup() {
         mvc = MockMvcBuilders
                 .webAppContextSetup(context)
                 .apply(springSecurity())
@@ -85,8 +85,8 @@ public class PostsApiControllerTest {
 //        ResponseEntity<Long> responseEntity
 //                = restTemplate.postForEntity(url, requestDto, Long.class);
         mvc.perform(post(url)
-                    .contentType(MediaType.APPLICATION_JSON_UTF8)
-                    .content(new ObjectMapper().writeValueAsString(requestDto)))
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(new ObjectMapper().writeValueAsString(requestDto)))
                 .andExpect(status().isOk());
         //then
 //        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -162,7 +162,7 @@ public class PostsApiControllerTest {
     }
 
     @Test
-    public void Posts_삭제된다() throws Exception{
+    public void Posts_삭제된다() throws Exception {
         //given
         Posts savedPosts = postsRepository.save(Posts.builder()
                 .title("title")
@@ -177,20 +177,20 @@ public class PostsApiControllerTest {
                 .id(id)
                 .build();
 
-        String url = "http://localhost:"+port+"/api/v1/posts/"+id;
+        String url = "http://localhost:" + port + "/api/v1/posts/" + id;
         HttpEntity<PostsDeleteRequestDto> requestEntity
                 = new HttpEntity<>(requestDto);
 
         //when
-//        ResponseEntity<Long> responseEntity
-//                = restTemplate.exchange(url, HttpMethod.DELETE,
-//                requestEntity, Long.class);
-        mvc.perform(delete(url)
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(new ObjectMapper().writeValueAsString(requestDto)))
-                .andExpect(status().isOk());
+        ResponseEntity<Long> responseEntity
+                = restTemplate.exchange(url, HttpMethod.DELETE,
+                requestEntity, Long.class);
+//        mvc.perform(delete(url)
+//                .contentType(MediaType.APPLICATION_JSON_UTF8)
+//                .content(new ObjectMapper().writeValueAsString(requestDto)))
+//                .andExpect(status().isOk());
         //than
-//        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.FOUND);
 //        assertThat(responseEntity.getBody()).isGreaterThan(0L);
 //
 //        System.out.println(">>>>>>>>"+responseEntity.getBody().longValue());
